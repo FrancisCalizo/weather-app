@@ -1,16 +1,33 @@
 // Init Weather Object
-const weather = new Weather('Miami', 'US');
+const weather = new Weather('Fort Lauderdale', 'US');
 // Init UI Object
 const ui = new UI();
 
 // Get Weather onLoad
-
 window.addEventListener('load', () => {
   weather
     .getWeather()
     .then(weatherData => {
-      console.log(weatherData);
+      // console.log(weatherData);
       ui.display(weatherData);
     })
     .catch(err => console.log(err));
+});
+
+// Get Modal Form Submission
+document.getElementById('w-change-btn').addEventListener('click', e => {
+  const city = document.getElementById('city').value;
+  const countryCode = document.getElementById('country-code').value;
+
+  if (city !== '' && countryCode !== '') {
+    weather.changeLocation(city, countryCode);
+
+    weather
+      .getWeather()
+      .then(weatherData => {
+        ui.display(weatherData);
+      })
+      .catch(err => console.log(err));
+  }
+  // e.preventDefault();
 });
