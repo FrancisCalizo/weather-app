@@ -1,10 +1,14 @@
+// Init Storage Obj
+const storage = new Storage();
+// Get Location From Storage
+storage.loadStorage();
 // Init Weather Object
-const weather = new Weather('Fort Lauderdale', 'US');
+const weather = new Weather(storage.city, storage.countryCode);
 // Init UI Object
 const ui = new UI();
 
 // Get Weather onLoad
-window.addEventListener('load', () => {
+window.addEventListener("load", () => {
   weather
     .getWeather()
     .then(weatherData => {
@@ -15,19 +19,29 @@ window.addEventListener('load', () => {
 });
 
 // Get Modal Form Submission
-document.getElementById('w-change-btn').addEventListener('click', e => {
-  const city = document.getElementById('city').value;
-  const countryCode = document.getElementById('country-code').value;
+document.getElementById("w-change-btn").addEventListener("click", e => {
+  let city = document.getElementById("city").value;
+  let countryCode = document.getElementById("country-code").value;
 
-  if (city !== '' && countryCode !== '') {
+  if (city !== "" && countryCode !== "") {
     weather.changeLocation(city, countryCode);
 
     weather
       .getWeather()
       .then(weatherData => {
         ui.display(weatherData);
+        storage.saveStorage(city, countryCode);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        ui.showError();
+      });
   }
-  // e.preventDefault();
+
+  ui.clearInputs();
+});
+
+// Clear inputs on Modal Close
+document.getElementById("w-close").addEventListener("click", e => {
+  ui.clearInputs();
 });
