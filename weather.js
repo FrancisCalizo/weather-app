@@ -1,9 +1,9 @@
 class Weather {
   constructor(city, countryCode) {
-    this.apiKey = '46bd653e811b0652deef50ac35b587c0';
+    this.apiKey = "46bd653e811b0652deef50ac35b587c0";
     this.city = city;
     this.countryCode = countryCode;
-    this.units = 'imperial';
+    this.units = "imperial";
   }
 
   // Fetch Weather from API
@@ -14,9 +14,10 @@ class Weather {
       }&units=${this.units}&APPID=${this.apiKey}`
     );
 
-    const data = await promise.json();
-
-    return data;
+    if (promise.status == 200) {
+      const data = await promise.json();
+      return data;
+    }
   }
 
   // Change Weather Location
