@@ -8,10 +8,13 @@ class Weather {
 
   // Fetch Weather from API
   async getWeather() {
+    if (this.city === null && this.countryCode === null) {
+      this.city = 'miami';
+      this.countryCode = 'US';
+    }
+
     const promise = await fetch(
-      `http://api.openweathermap.org/data/2.5/weather?q=${this.city},${
-        this.countryCode
-      }&units=${this.units}&APPID=${this.apiKey}`
+      `http://api.openweathermap.org/data/2.5/weather?q=${this.city},${this.countryCode}&units=${this.units}&APPID=${this.apiKey}`
     );
 
     const data = await promise.json();

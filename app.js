@@ -1,5 +1,12 @@
+// Init Local Storage Object
+const storage = new Storage();
+
 // Init Weather Object
-const weather = new Weather('Fort Lauderdale', 'US');
+const weather = new Weather(
+  localStorage.getItem('city'),
+  localStorage.getItem('countryCode')
+);
+
 // Init UI Object
 const ui = new UI();
 
@@ -19,15 +26,14 @@ document.getElementById('w-change-btn').addEventListener('click', e => {
   const city = document.getElementById('city').value;
   const countryCode = document.getElementById('country-code').value;
 
-  if (city !== '' && countryCode !== '') {
-    weather.changeLocation(city, countryCode);
+  weather.changeLocation(city, countryCode);
 
-    weather
-      .getWeather()
-      .then(weatherData => {
-        ui.display(weatherData);
-      })
-      .catch(err => console.log(err));
-  }
+  weather
+    .getWeather()
+    .then(weatherData => {
+      ui.display(weatherData);
+    })
+    .catch(err => console.log(err));
+
   // e.preventDefault();
 });
