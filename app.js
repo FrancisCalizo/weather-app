@@ -1,12 +1,9 @@
-// Init Local Storage Object
+// Init Storage Obj
 const storage = new Storage();
-
+// Get Location From Storage
+storage.loadStorage();
 // Init Weather Object
-const weather = new Weather(
-  localStorage.getItem('city'),
-  localStorage.getItem('countryCode')
-);
-
+const weather = new Weather(storage.city, storage.countryCode);
 // Init UI Object
 const ui = new UI();
 
@@ -23,17 +20,23 @@ window.addEventListener('load', () => {
 
 // Get Modal Form Submission
 document.getElementById('w-change-btn').addEventListener('click', e => {
-  const city = document.getElementById('city').value;
-  const countryCode = document.getElementById('country-code').value;
+  let city = document.getElementById('city').value;
+  let countryCode = document.getElementById('country-code').value;
 
-  weather.changeLocation(city, countryCode);
+  if (city !== '' && countryCode !== '') {
+    weather.changeLocation(city, countryCode);
 
-  weather
-    .getWeather()
-    .then(weatherData => {
-      ui.display(weatherData);
-    })
-    .catch(err => console.log(err));
+    weather
+      .getWeather()
+      .then(weatherData => {
+        ui.display(weatherData);
+        storage.saveStorage(city, countryCode);
+      })
+      .catch(err => {
+        console.log(err);
+        ui.showError();
+      });
+  }
 
-  // e.preventDefault();
+  ui.clearInputs();
 });

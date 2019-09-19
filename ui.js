@@ -52,8 +52,25 @@ class UI {
         break;
     }
 
-    this.wind.innerHTML = `Wind: From the ${this.windDirection} gusting at ${
-      weatherData.wind.speed
-    } MPH`;
+    this.wind.innerHTML = `Wind: From the ${this.windDirection} gusting at ${weatherData.wind.speed} MPH`;
+  }
+
+  showError() {
+    const errorParent = document.querySelector('.rounded');
+
+    const div = document.createElement('div');
+    div.className = 'alert alert-danger';
+    div.textContent = 'Unable to find location';
+    errorParent.insertBefore(div, errorParent.firstChild);
+
+    // Remove Error after 3 Seconds
+    setTimeout(() => {
+      errorParent.removeChild(errorParent.firstElementChild);
+    }, 3000);
+  }
+
+  clearInputs() {
+    document.getElementById('city').value = '';
+    document.getElementById('country-code').value = '';
   }
 }
