@@ -18,7 +18,7 @@ class UI {
     this.string.innerHTML = `${parseInt(weatherData.main.temp)} F`;
     this.icon.setAttribute(
       'src',
-      `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`
+      `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`
     );
     this.humidity.innerHTML = `Relative Humidity: ${weatherData.main.humidity}`;
     this.max.innerHTML = `High: ${weatherData.main.temp_max} F`;

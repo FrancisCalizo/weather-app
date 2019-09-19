@@ -9,7 +9,7 @@ class Weather {
   // Fetch Weather from API
   async getWeather() {
     const promise = await fetch(
-      `http://api.openweathermap.org/data/2.5/weather?q=${this.city},${this.countryCode}&units=${this.units}&APPID=${this.apiKey}`
+      `https://api.openweathermap.org/data/2.5/weather?q=${this.city},${this.countryCode}&units=${this.units}&APPID=${this.apiKey}`
     );
 
     if (promise.status == 200) {
